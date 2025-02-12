@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, TextInput, Button } from 'react-native';
+import axios from 'axios'
+import { View, Text, TextInput, Button, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-const fetchData = async () => {
+// haetaan data tarkov-apista
+const fetchData = async (itemName) => {
     const query = `{
-        items(name: "m856a1") {
+        items(name: "${itemName}") {
             id
             name
             avg24hPrice
@@ -28,31 +30,80 @@ const fetchData = async () => {
     }
 };
 
+
 const sellOrNot = (low, avg) => {
     return low > avg ? 'Sell' : 'Do not sell';
 };
 
+
+
 const TarkovItem = () => {
     const [itemData, setItemData] = useState(null);
-    const [itemName, setItemName] = useState('m856a1');
+    const [itemName, setItemName] = useState('');
     const navigation = useNavigation();
-    
+
+
     useEffect(() => {
         const loadData = async () => {
-            const data = await fetchData();
+            const data = await fetchData('m855a1');
             if (data) setItemData(data);
         };
         loadData();
     }, []);
     
-    const handleFetch = async () => {
-        const data = await fetchData();
+    const handleFetch = async (itemName) => {
+        const data = await fetchData(itemName);
         if (data) setItemData(data);
     };
+
+
 
     if (!itemData) {
         return <Text>Loading...</Text>;
     }
+
+
+    // haetaan suosikit
+  const haeSuosikit = async () => {
+    try {
+      const response = await axios.get('http://localhost:8081/suosikit');
+        console.log('response', response.data);
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  };
+
+  // Lisätään suosikki
+  const lisaaSuosikki = async () => {
+    try {
+      const response = await axios.post('http://localhost:8081/suosikit', { itemName });
+        console.log('response', response.data);
+    }
+    catch (error) {
+        console.error('Error fetching data:', error);
+    }
+  };
+
+
+  
+  const handleButtonPress = async () => {
+    if (!itemName.trim()) {
+        Alert.alert("Error", "Please enter an item name.");
+        return;
+    }
+
+    console.log("Fetching data for:", itemName);
+
+    const data = await fetchData(itemName); // Await the async fetch
+    if (data) {
+        setItemData(data);
+    } else {
+        Alert.alert("Error", "Item not found.");
+        console.log("ei löydy")
+    }
+};
+
 
     return (
         <View>
@@ -67,8 +118,10 @@ const TarkovItem = () => {
                 onChangeText={setItemName} 
                 style={{ borderWidth: 1, padding: 8, margin: 10 }}
             />
-            <Button title="Fetch Item Data" onPress={handleFetch} />
-            <Button title="Go to Home" onPress={() => navigation.navigate('Home')} />
+
+            <Button title="Refresh Item Data" onPress={handleFetch} />
+            <Button title="New Item Data" onPress={handleButtonPress} />
+            <Button title="Go to Favorites" onPress={() => navigation.navigate('favorites')} />
         </View>
     );
 };
