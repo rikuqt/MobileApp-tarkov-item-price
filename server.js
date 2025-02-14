@@ -1,5 +1,3 @@
-// moi
-
 const mongoose = require("mongoose");
 const express = require("express");
 const cors = require("cors");
@@ -8,7 +6,7 @@ require('dotenv').config();
 
 const app = express();
 app.use(express.json());
-app.use(cors({origin: "http://localhost:8081"}));
+app.use(cors({origin: "*"}));
 
 // Debug-tulostus ympäristömuuttujalle
 console.log("Yhdistettävä MongoDB URI:", process.env.MONGO_URI);  // Tarkista, että URI on oikein
@@ -31,7 +29,7 @@ const SuosikkiSchema = new mongoose.Schema({
 
 const Suosikki = mongoose.model("Suosikki", SuosikkiSchema);
 
-// 🚀 API-endpoint suosikin tallentamiseen
+// API-endpoint suosikin tallentamiseen
 app.post("/suosikit", async (req, res) => {
   try {
     const { itemName } = req.body;
@@ -48,7 +46,7 @@ app.post("/suosikit", async (req, res) => {
   }
 });
 
-// 🚀 API-endpoint suosikkien hakemiseen
+// API-endpoint suosikkien hakemiseen
 app.get("/suosikit", async (req, res) => {
   try {
     const suosikit = await Suosikki.find();
@@ -58,7 +56,7 @@ app.get("/suosikit", async (req, res) => {
   }
 });
 
-// 🚀 API-endpoint suosikin poistamiseen
+// API-endpoint suosikin poistamiseen
 app.delete("/suosikit/:id", async (req, res) => {
   try {
     await Suosikki.findByIdAndDelete(req.params.id);
