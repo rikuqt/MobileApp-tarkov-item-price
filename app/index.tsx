@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { View, Text, TextInput, Button, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+const LOCALHOST_URL = "localhost/5000"; // Korvaa oikealla IP:lläsi
+const KOYEB_URL = "https://aggressive-coleen-iteee22-a25260f2.koyeb.app"
+
+
 
 // haetaan data tarkov-apista
 const fetchData = async (itemName) => {
@@ -40,7 +43,6 @@ const sellOrNot = (low, avg) => {
 const TarkovItem = () => {
     const [itemData, setItemData] = useState(null);
     const [itemName, setItemName] = useState('');
-    const navigation = useNavigation();
 
 
     useEffect(() => {
@@ -66,18 +68,21 @@ const TarkovItem = () => {
     // haetaan suosikit
   const haeSuosikit = async () => {
     try {
-      const response = await axios.get('http://localhost:8081/suosikit');
+      const response = await axios.get(`${KOYEB_URL}/suosikit`);
         console.log('response', response.data);
+        return response.data;
     }
     catch (error) {
         console.error('Error fetching data:', error);
     }
   };
 
+
+  
   // Lisätään suosikki
   const lisaaSuosikki = async () => {
     try {
-      const response = await axios.post('http://localhost:8081/suosikit', { itemName });
+      const response = await axios.post(`${KOYEB_URL}/suosikit`, { itemName,  itemData});
         console.log('response', response.data);
     }
     catch (error) {
@@ -119,9 +124,11 @@ const TarkovItem = () => {
                 style={{ borderWidth: 1, padding: 8, margin: 10 }}
             />
 
-            <Button title="Refresh Item Data" onPress={handleFetch} />
-            <Button title="New Item Data" onPress={handleButtonPress} />
-            <Button title="Go to Favorites" onPress={() => navigation.navigate('favorites')} />
+            <Button title="Päivitä data" onPress={handleFetch} />
+            <Button title="Uusi data" onPress={handleButtonPress} />
+            <Button title="Lisää suosikkeihin" onPress={lisaaSuosikki} />
+            <Button title="Hae suoskit" onPress={haeSuosikit} />
+            <Text>Suosikit {}</Text>
         </View>
     );
 };
