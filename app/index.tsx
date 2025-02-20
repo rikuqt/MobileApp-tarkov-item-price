@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import { View, Text, TextInput, Button, Alert } from 'react-native';
-const LOCALHOST_URL = "localhost/5000"; // Korvaa oikealla IP:lläsi
+const LOCALHOST_URL = "localhost/5000";
 const KOYEB_URL = "https://aggressive-coleen-iteee22-a25260f2.koyeb.app"
 
 
@@ -43,6 +43,7 @@ const sellOrNot = (low, avg) => {
 const TarkovItem = () => {
     const [itemData, setItemData] = useState(null);
     const [itemName, setItemName] = useState('');
+    const [suosikit, setSuosikit] = useState([]);
 
 
     useEffect(() => {
@@ -70,19 +71,22 @@ const TarkovItem = () => {
     try {
       const response = await axios.get(`${KOYEB_URL}/suosikit`);
         console.log('response', response.data);
-        return response.data;
+        setSuosikit(response.data);
     }
     catch (error) {
         console.error('Error fetching data:', error);
     }
   };
 
+  const suosikki = suosikit.map((item, index) => (
+    <Text key={index}>{item.itemName}</Text>
+  ));
 
   
   // Lisätään suosikki
   const lisaaSuosikki = async () => {
     try {
-      const response = await axios.post(`${KOYEB_URL}/suosikit`, { itemName,  itemData});
+      const response = await axios.post(`${KOYEB_URL}/suosikit`, { itemName,  });
         console.log('response', response.data);
     }
     catch (error) {
@@ -110,6 +114,7 @@ const TarkovItem = () => {
 };
 
 
+
     return (
         <View>
             <Text>Item: {itemData.name}</Text>
@@ -127,8 +132,9 @@ const TarkovItem = () => {
             <Button title="Päivitä data" onPress={handleFetch} />
             <Button title="Uusi data" onPress={handleButtonPress} />
             <Button title="Lisää suosikkeihin" onPress={lisaaSuosikki} />
-            <Button title="Hae suoskit" onPress={haeSuosikit} />
-            <Text>Suosikit {}</Text>
+            <Button title="Listaa suosikit" onPress={haeSuosikit} />
+            <Text>Suosikit lista:</Text>
+            {suosikki}
         </View>
     );
 };
