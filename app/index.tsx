@@ -91,6 +91,27 @@ const TarkovItem = () => {
   };
 
 
+  const poistaSuosikki = async () => {
+    try {
+        // Make sure the id exists in itemData
+        if (!itemData?.id) {
+            Alert.alert("Error", "Item ID is missing.");
+            return;
+        }
+        
+        // Send DELETE request with item ID
+        const response = await axios.delete(`${KOYEB_URL}/suosikit/${itemData.id}`);
+        console.log('Poistettu suosikeista:', response.data);
+        Alert.alert("Success", "Item removed from favorites.");
+    } catch (error) {
+        console.error('Virhe poistaessa suosikkia:', error.response ? error.response.data : error.message);
+        Alert.alert("Error", "Failed to remove item from favorites.");
+    }
+};
+ 
+
+    
+
   
   const handleButtonPress = async () => {
     if (!itemName.trim()) {
@@ -127,6 +148,7 @@ const TarkovItem = () => {
             <Button title="Päivitä data" onPress={handleFetch} />
             <Button title="Uusi data" onPress={handleButtonPress} />
             <Button title="Lisää suosikkeihin" onPress={lisaaSuosikki} />
+            <Button title="Poista suosikeista" onPress={poistaSuosikki} />
             <Button title="Hae suoskit" onPress={haeSuosikit} />
             <Text>Suosikit {}</Text>
         </View>
