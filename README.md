@@ -40,6 +40,9 @@ node server.js
 3. Add the item to favorites by clicking "Add to Favorites."
 4. List favorite items by clicking "List Favorites."
 
+## Download
+[![Download Now](https://img.shields.io/badge/Download-Now-blue?style=for-the-badge)](https://expo.dev/accounts/rikuq/projects/mobiiliAppi/builds/dc6fccbb-d7a1-4192-95e4-589a4335ec66)
+
 ## API Requests
 ### Fetch Item Data
 ```graphql
@@ -57,10 +60,4 @@ node server.js
 ### Favorite Items Management
 - **Fetch Favorites:** `GET /suosikit`
 - **Add Favorite:** `POST /suosikit` (Body: `{ itemName: "item name" }`)
-
-## Contact
-If you have any questions or would like to contribute to this project, feel free to reach out!
-
----
-**Author:** [Your Name]
 
