@@ -6,7 +6,7 @@ Tarkov Item Price Tracker is a React Native application that fetches item price 
 - **Frontend**: React Native (Expo)
 - **Backend**: Node.js (Express)
 - **Database**: MongoDB
-- **API**: [Tarkov.dev GraphQL API](https://api.tarkov.dev/graphql](https://tarkov.dev/api/)
+- **API**: [Tarkov.dev GraphQL API](https://tarkov.dev/api/)
 
 ## Features
 - Fetches item details from the Tarkov.dev API
@@ -57,3 +57,10 @@ node server.js
 ### Favorite Items Management
 - **Fetch Favorites:** `GET /suosikit`
 - **Add Favorite:** `POST /suosikit` (Body: `{ itemName: "item name" }`)
+
+## Contact
+If you have any questions or would like to contribute to this project, feel free to reach out!
+
+---
+**Author:** [Your Name]
+
