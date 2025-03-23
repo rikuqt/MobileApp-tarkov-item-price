@@ -1,3 +1,8 @@
+<img src="https://github.com/user-attachments/assets/d2f8e886-536e-4df7-9660-3484d8188b45" width="300">
+
+
+
+
 # Tarkov Item Price Tracker
 
 Tarkov Item Price Tracker is a React Native application that fetches item price data from the Escape from Tarkov game and provides recommendations on whether to sell them. Additionally, the app allows users to save and list their favorite items.
