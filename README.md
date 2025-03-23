@@ -6,7 +6,7 @@ Tarkov Item Price Tracker is a React Native application that fetches item price 
 - **Frontend**: React Native (Expo)
 - **Backend**: Node.js (Express)
 - **Database**: MongoDB
-- **API**: [Tarkov.dev GraphQL API](https://api.tarkov.dev/graphql)
+- **API**: [Tarkov.dev GraphQL API](https://api.tarkov.dev/graphql](https://tarkov.dev/api/)
 
 ## Features
 - Fetches item details from the Tarkov.dev API
